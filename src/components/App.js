@@ -20,6 +20,7 @@ function App() {
   
   const retrieveData = async ()=>{
       const response = await api.get();
+      console.log(response.data);
       return response.data;
   }
 
@@ -59,19 +60,19 @@ function App() {
             setTickets(data.tickets);
             setUsers(data.users)
         }
+        const getIntialState = () => {
+          const data = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+          if (data) {
+            setGrouping(data.group);
+            setOrdering(data.order);
+          } else {
+            setGrouping("status");
+            setOrdering("priority");
+          }
+        }
+        getIntialState();
     }
     getData();
-    const getIntialState = () => {
-      const data = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-      if (data) {
-        setGrouping(data.group);
-        setOrdering(data.order);
-      } else {
-        setGrouping("status");
-        setOrdering("priority");
-      }
-    }
-    getIntialState();
     displaySettingHandler();
   }, []);
 
