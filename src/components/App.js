@@ -3,10 +3,11 @@ import "./App.css"
 import Header from './Header'
 import Display from "./Display";
 import CardList from "./CardList";
-import { type, userid, priorities, userNames, prioritiestext } from "../constants";
+import { types, userid, priorities, userNames, prioritiestext } from "../constants";
 import api from "../api/index"
 
 function App() {
+
   const LOCAL_STORAGE_KEY = "initial_state";
   const [tickets, setTickets] = useState([]);
   const [users,setUsers] = useState([]);
@@ -20,18 +21,17 @@ function App() {
   
   const retrieveData = async ()=>{
       const response = await api.get();
-      console.log(response.data);
       return response.data;
   }
 
   const displaySettingHandler = () => {
     const list = [];
-    const filterList = grouping === "status" ? type :
+    const filterList = grouping === "status" ? types :
       grouping === "user" ? userNames :
       grouping === "priority" ? prioritiestext : [];
     for (let i = 0; i < 5; i++) {
       list.push(tickets.filter((ticket) => {
-        if (grouping === "status") return ticket.status === type[i];
+        if (grouping === "status") return ticket.status === types[i].type;
         if (grouping === "user") return ticket.userId === userid[i];
         if (grouping === "priority") return ticket.priority === priorities[i];
         return false;
@@ -43,8 +43,8 @@ function App() {
       list.forEach(subList => subList.sort((a, b) => b.priority - a.priority));
     }
     const countList = list.map(subList => subList.length);
-    const userAvailability = users.map(user=> {
-      const userState = {id:user.id,available:user.available};
+    const userAvailability = users.map((user,index)=> {
+      const userState = {id:user.id,available:user.available,img:userNames[index].icon};
       return userState;
     });
     setCardLists(list);
@@ -84,11 +84,11 @@ function App() {
 
   return (
     <div>
-      <Header isActive={isActive} setIsActive={setIsActive} />
-      {isActive && <Display setIsActive={setIsActive} grouping={grouping} setGrouping={setGrouping} ordering={ordering} setOrdering={setOrdering} />}
+      <Header isActive={isActive} setIsActive={setIsActive}/>
+      {isActive && <Display setIsActive={setIsActive} grouping={grouping} setGrouping={setGrouping} ordering={ordering} setOrdering={setOrdering}/>}
       <div className="main-div">
         {titleList.map((title, index) => (
-          <CardList key={index} title={title} list={cardLists[index]} count={countList[index]} userAvailability={userAvailability}/>
+          <CardList key={index} keyy={index} title={title} list={cardLists[index]} count={countList[index]} userAvailability={userAvailability} status={types} grouping={grouping}/>
         ))}
       </div>
     </div>
