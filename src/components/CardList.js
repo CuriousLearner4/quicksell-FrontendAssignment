@@ -5,7 +5,6 @@ const CardList = (props)=>{
 
     const title = props.title;
     const count = props.count;
-    console.log(props.userAvailability);
     const renderedList = props.list.map((details)=>{
         return <Card details={details} userStatus={props.userAvailability} key={details.id}/>
     });

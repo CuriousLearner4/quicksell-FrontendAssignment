@@ -4,7 +4,6 @@ import "./App.css"
 const Card = (props)=>{
     const info = props.details;
     const currUser = props.userStatus.find((obj) => obj.id === props.details.userId);
-    console.log(currUser);
     return(
         <div className = "card">
             <div className = "header">
