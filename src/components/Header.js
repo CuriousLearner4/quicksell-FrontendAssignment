@@ -8,7 +8,7 @@ const Header = (props)=>{
     }
     return(
         <div className="nav">
-            <button className="nav-btn" onClick={clickHander}>
+            <button className="nav-btn" onClick={clickHander} ref={props.refer}>
             <span className="material-symbols-outlined">tune</span>
             <span>Display</span>
             <span className="material-symbols-outlined">expand_more</span>

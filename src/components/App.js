@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import "./App.css"
 import Header from './Header'
 import Display from "./Display";
@@ -7,6 +7,8 @@ import { types, userid, priorities, userNames, prioritiestext } from "../constan
 import api from "../api/index"
 
 function App() {
+  const refbtn = useRef();
+  const refdbox = useRef();
 
   const LOCAL_STORAGE_KEY = "initial_state";
   const [tickets, setTickets] = useState([]);
@@ -84,8 +86,8 @@ function App() {
 
   return (
     <div>
-      <Header isActive={isActive} setIsActive={setIsActive}/>
-      {isActive && <Display setIsActive={setIsActive} grouping={grouping} setGrouping={setGrouping} ordering={ordering} setOrdering={setOrdering}/>}
+      <Header isActive={isActive} setIsActive={setIsActive} refer={refbtn}/>
+      {isActive && <Display setIsActive={setIsActive} grouping={grouping} setGrouping={setGrouping} ordering={ordering} setOrdering={setOrdering} refer={refdbox} refer1={refbtn}/>}
       <div className="main-div">
         {titleList.map((title, index) => (
           <CardList key={index} keyy={index} title={title} list={cardLists[index]} count={countList[index]} userAvailability={userAvailability} status={types} grouping={grouping}/>

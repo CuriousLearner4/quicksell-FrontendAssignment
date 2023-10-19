@@ -1,6 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import "./App.css"
 const Display = (props)=>{
+
+    useEffect(()=>{
+        const Handler = (e)=>{
+            if(!props.refer.current.contains(e.target)&&!props.refer1.current.contains(e.target)){
+                props.setIsActive(false);
+            }
+        }
+        document.addEventListener("mousedown",Handler);
+        return ()=>{
+            document.removeEventListener("mousedown",Handler);
+        }
+    });
 
     const groupHandler = (e)=>{ 
         props.setGrouping(e.target.value);
@@ -9,7 +21,7 @@ const Display = (props)=>{
         props.setOrdering(e.target.value);
     }
     return (
-        <div className="dialog-box-wrap" >
+        <div className="dialog-box-wrap"  ref={props.refer}>
             <div className = "dialog-box">
                 <div className="feild">
                     <label htmlFor="grouping">Grouping</label>
